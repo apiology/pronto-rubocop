@@ -38,7 +38,7 @@ module Pronto
       offences.sort.reject(&:disabled?).map do |offence|
         patch.added_lines
           .select { |line| line.new_lineno == offence.line }
-          .map { |line| new_message(offence, line.new_lineno) }
+          .map { |line| new_message(offence, line) }
       end
     end
 
@@ -46,7 +46,8 @@ module Pronto
       path = line.patch.delta.new_file[:path]
       level = level(offence.severity.name)
 
-      Message.new(path, line, level, offence.message, nil, self.class)
+      Message.new(path, line.new_lineno, level, offence.message, nil,
+                  self.class)
     end
 
     def config_store_for(patch)
