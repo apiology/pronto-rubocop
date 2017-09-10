@@ -38,7 +38,7 @@ module Pronto
       offences.sort.reject(&:disabled?).map do |offence|
         patch.added_lines
           .select { |line| line.new_lineno == offence.line }
-          .map { |line| new_message(offence, line.new_line_no) }
+          .map { |line| new_message(offence, line.new_lineno) }
       end
     end
 
